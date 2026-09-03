@@ -1,0 +1,45 @@
+{"id": "q01", "query": "What UI theme does the user prefer?", "relevant": [{"source": "user_preferences.md", "contains": "dark mode"}]}
+{"id": "q02", "query": "What timezone should the agent assume for the user?", "relevant": [{"source": "user_preferences.md", "contains": "Asia/Kolkata"}]}
+{"id": "q03", "query": "What date format does the user want?", "relevant": [{"source": "user_preferences.md", "contains": "YYYY-MM-DD"}]}
+{"id": "q04", "query": "Which fonts should we avoid on branded frontend work?", "relevant": [{"source": "user_preferences.md", "contains": "Inter, Roboto, and Arial"}]}
+{"id": "q05", "query": "What is the user's Cursor font size preference?", "relevant": [{"source": "user_preferences.md", "contains": "font size preference is 14"}]}
+{"id": "q06", "query": "Where does Memotrix store vectors in production?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "PostgreSQL with pgvector"}]}
+{"id": "q07", "query": "What fusion method does hybrid search use?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "Reciprocal Rank Fusion"}]}
+{"id": "q08", "query": "What is the current embedding model?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "bge-small-en-v1.5"}]}
+{"id": "q09", "query": "What CHUNK_SIZE does Memotrix use by default?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "CHUNK_SIZE is 500"}]}
+{"id": "q10", "query": "Which embedding model did bge-small replace?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "all-MiniLM-L6-v2"}]}
+{"id": "q11", "query": "Why must Memotrix queries stay low-latency for context-gate?", "relevant": [{"source": "session_2026_07_10.md", "contains": "nearly every reasoning step"}]}
+{"id": "q12", "query": "Why is full-file expansion wrong for agent memory?", "relevant": [{"source": "session_2026_07_10.md", "contains": "hard context budgets"}]}
+{"id": "q13", "query": "What metrics should the eval harness measure?", "relevant": [{"source": "session_2026_07_10.md", "contains": "Recall@5, MRR"}]}
+{"id": "q14", "query": "What is still undecided about the embedding upgrade?", "relevant": [{"source": "session_2026_07_10.md", "contains": "nomic-embed-text-v1.5"}]}
+{"id": "q15", "query": "How do I start local Postgres for Memotrix?", "relevant": [{"source": "procedures_deploy.md", "contains": "docker compose up -d"}]}
+{"id": "q16", "query": "Where do Postgres credentials come from?", "relevant": [{"source": "procedures_deploy.md", "contains": ".env file"}]}
+{"id": "q17", "query": "Should we force-push to main?", "relevant": [{"source": "procedures_deploy.md", "contains": "Never force-push to main"}]}
+{"id": "q18", "query": "How does CSV ingestion embed row data now?", "relevant": [{"source": "bugs_known.md", "contains": "row batches"}]}
+{"id": "q19", "query": "What happens to old chunks when a file is re-ingested?", "relevant": [{"source": "bugs_known.md", "contains": "deletes prior chunks"}]}
+{"id": "q20", "query": "How many chunks should agent retrieval return?", "relevant": [{"source": "bugs_known.md", "contains": "two to three"}]}
+{"id": "q21", "query": "Who is the project owner?", "relevant": [{"source": "team_contacts.md", "contains": "matrixboy"}]}
+{"id": "q22", "query": "Where does the upgrade roadmap live?", "relevant": [{"source": "team_contacts.md", "contains": "upgrade.md"}]}
+{"id": "q23", "query": "What should PR summaries include?", "relevant": [{"source": "team_contacts.md", "contains": "Test plan checklists"}]}
+{"id": "q24", "query": "What is Memotrix?", "relevant": [{"source": "semantic_product.md", "contains": "multimodal AI memory / RAG pipeline"}]}
+{"id": "q25", "query": "Is Memotrix a chat UI?", "relevant": [{"source": "semantic_product.md", "contains": "not a chat UI"}]}
+{"id": "q26", "query": "How should retrieval accuracy be judged?", "relevant": [{"source": "semantic_product.md", "contains": "measured with an eval set"}]}
+{"id": "q27", "query": "How do I add support for a new file type?", "relevant": [{"source": "procedures_add_filetype.md", "contains": "Create an extractor under src/filetypes"}]}
+{"id": "q28", "query": "What shared schema should new extractors normalize into?", "relevant": [{"source": "procedures_add_filetype.md", "contains": "DocumentData"}]}
+{"id": "q29", "query": "What validation is required when adding a file type?", "relevant": [{"source": "procedures_add_filetype.md", "contains": "Recall@5 drops"}]}
+{"id": "q30", "query": "Why did the agent answer incorrectly on 2026-07-12 despite a correct hybrid hit?", "relevant": [{"source": "session_2026_07_12.md", "contains": "expanded full file drowned the matched sentence"}]}
+{"id": "q31", "query": "What was the root cause of the July 12 debugging session?", "relevant": [{"source": "session_2026_07_12.md", "contains": "replaced chunk_text with the entire source document"}]}
+{"id": "q32", "query": "What expansion strategy replaces full-file expansion?", "relevant": [{"source": "session_2026_07_12.md", "contains": "previous and next chunks"}]}
+{"id": "q33", "query": "When should the agent create git commits?", "relevant": [{"source": "user_working_style.md", "contains": "Only commit when asked"}]}
+{"id": "q34", "query": "What frontend theme anti-pattern should we avoid?", "relevant": [{"source": "user_working_style.md", "contains": "purple-on-white"}]}
+{"id": "q35", "query": "Are cards allowed by default in UI design?", "relevant": [{"source": "user_working_style.md", "contains": "Default: no cards"}]}
+{"id": "q36", "query": "What is the primary table name for chunks?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "memotrix_chunks"}]}
+{"id": "q37", "query": "Which reranker model is used?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "ms-marco-MiniLM-L-6-v2"}]}
+{"id": "q38", "query": "Does chunking ever split mid-word?", "relevant": [{"source": "project_memotrix_decisions.md", "contains": "never mid-word"}]}
+{"id": "q39", "query": "What parameter lets context-gate pass remaining context window size?", "relevant": [{"source": "session_2026_07_12.md", "contains": "max_tokens_returned"}]}
+{"id": "q40", "query": "What density preference does the user have for lists?", "relevant": [{"source": "user_preferences.md", "contains": "compact density"}]}
+{"id": "q41", "query": "Should .env be committed?", "relevant": [{"source": "procedures_deploy.md", "contains": "Do not commit .env"}]}
+{"id": "q42", "query": "What working hours overlap for the project owner?", "relevant": [{"source": "team_contacts.md", "contains": "Asia/Kolkata evenings"}]}
+{"id": "q43", "query": "Why does latency per query matter for Memotrix?", "relevant": [{"source": "semantic_product.md", "contains": "agents call memory constantly"}]}
+{"id": "q44", "query": "What should happen if the shared harness Recall@5 drops after a filetype change?", "relevant": [{"source": "procedures_add_filetype.md", "contains": "investigate before merging"}]}
+{"id": "q45", "query": "What should Stage 4 keep when expanding context?", "relevant": [{"source": "session_2026_07_12.md", "contains": "Keep matched_chunk"}]}

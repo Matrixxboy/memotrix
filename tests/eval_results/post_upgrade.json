@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "n_queries": 45,
+    "recall_at_k": 0.9777777777777777,
+    "mrr": 0.9229629629629629,
+    "latency_ms_mean": 709.2098888888561,
+    "latency_ms_p50": 620.0836000007257,
+    "latency_ms_p95": 1328.1954999994919,
+    "top_k": 5,
+    "expand_mode": "neighbors",
+    "embedding_model": "BAAI/bge-small-en-v1.5",
+    "misses": [
+      "q31"
+    ]
+  },
+  "config": {
+    "eval_set": "C:\\Users\\matrixboy\\OneDrive\\Desktop\\Memotrix\\tests\\eval_set.jsonl",
+    "corpus": "C:\\Users\\matrixboy\\OneDrive\\Desktop\\Memotrix\\tests\\fixtures\\agent_memory",
+    "max_tokens_returned": 800,
+    "legacy_full_file": false
+  }
+}

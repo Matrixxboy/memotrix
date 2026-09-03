@@ -1,0 +1,13 @@
+{
+  "description": "AI model not configured. Prompt received: You are an expert document OCR + image captioning model for a retrieval system.\n\nDocument context: PPTX slide 7 image 17\n\nProduce a searchable description of this image with these sections:\n\n1) TEXT I",
+  "caption": "other from slide7_img17_911b85f2b6.png",
+  "visual_kind": "other",
+  "is_decorative": false,
+  "tags": [
+    "png",
+    "1327x1353",
+    "PPTX_slide_7_image_17",
+    "other"
+  ],
+  "context": "PPTX slide 7 image 17"
+}

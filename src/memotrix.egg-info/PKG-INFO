@@ -1,0 +1,126 @@
+Metadata-Version: 2.4
+Name: memotrix
+Version: 0.1.0
+Summary: Composable hybrid memory / RAG framework for agents.
+Author: Memotrix
+License: MIT
+Project-URL: Homepage, https://github.com/memotrix/memotrix
+Keywords: rag,memory,agents,pgvector,hybrid-search
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: python-dotenv>=1.0.0
+Provides-Extra: postgres
+Requires-Dist: psycopg[binary]>=3.2.0; extra == "postgres"
+Requires-Dist: pgvector>=0.3.6; extra == "postgres"
+Provides-Extra: local
+Requires-Dist: hnswlib>=0.8.0; extra == "local"
+Requires-Dist: rank-bm25>=0.2.2; extra == "local"
+Requires-Dist: numpy>=1.26.0; extra == "local"
+Provides-Extra: embeddings
+Requires-Dist: sentence-transformers>=3.0.0; extra == "embeddings"
+Provides-Extra: extractors
+Requires-Dist: pymupdf>=1.24.0; extra == "extractors"
+Requires-Dist: python-docx>=1.1.0; extra == "extractors"
+Requires-Dist: python-pptx>=1.0.0; extra == "extractors"
+Requires-Dist: openpyxl>=3.1.0; extra == "extractors"
+Requires-Dist: pandas>=2.2.0; extra == "extractors"
+Requires-Dist: Pillow>=10.0.0; extra == "extractors"
+Requires-Dist: pillow-heif; extra == "extractors"
+Requires-Dist: PyYAML>=6.0; extra == "extractors"
+Provides-Extra: openai
+Requires-Dist: openai>=1.40.0; extra == "openai"
+Provides-Extra: audio
+Requires-Dist: faster-whisper>=1.0.0; extra == "audio"
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Provides-Extra: all
+Requires-Dist: memotrix[audio,embeddings,extractors,local,openai,postgres]; extra == "all"
+
+# Memotrix
+
+Composable hybrid memory / RAG for agents — pip-installable, like LangChain.
+
+## Install
+
+```bash
+pip install memotrix[postgres,embeddings,extractors]
+```
+
+Editable (this repo):
+
+```bash
+pip install -e ./memory[postgres,local,embeddings,extractors,openai]
+```
+
+## Quick start
+
+Nothing is assumed. You pass the embedding model and the database connection.
+
+```python
+import os
+from memotrix import Memory
+from memotrix.embeddings import HuggingFaceEmbeddings
+from memotrix.vectorstores import PostgresStore, InMemoryStore
+
+embeddings = HuggingFaceEmbeddings(model=os.environ["EMBEDDING_MODEL"])
+# dimension is inferred from the model — never hardcoded
+
+memory = Memory(
+    embeddings=embeddings,
+    store=PostgresStore(
+        connection=os.environ["DATABASE_URL"],
+        embeddings=embeddings,
+    ),
+)
+
+memory.add("report.pdf")
+hits = memory.search("what is the revenue?")
+```
+
+In-process (no Postgres):
+
+```python
+memory = Memory(
+    embeddings=embeddings,
+    store=InMemoryStore(embeddings),
+)
+```
+
+From environment (fails if required vars are missing):
+
+```python
+from memotrix import Memory
+memory = Memory.from_env()
+```
+
+Required env for `from_env()`:
+
+| Variable | When |
+|---|---|
+| `EMBEDDING_MODEL` | always |
+| `DATABASE_URL` (or discrete `DATABASE_*` / `POSTGRES_*` parts) | `MEMOTRIX_BACKEND=postgres` |
+| `MEMOTRIX_BACKEND` | `memory` (default) or `postgres` |
+| `RERANKER_MODEL` | optional |
+
+There is **no** default password, host, database name, embedding model, or embedding dimension.
+
+## Compose like LangChain
+
+```python
+from memotrix import Memory, MemoryConfig
+from memotrix.embeddings import HuggingFaceEmbeddings
+
+config = MemoryConfig(backend="postgres", table_name="my_chunks")
+memory = Memory(
+    embeddings=HuggingFaceEmbeddings(model="BAAI/bge-small-en-v1.5"),
+    connection="postgresql://user:pass@localhost:5432/app",
+    config=config,
+)
+```
+
+Custom dense/sparse indexes can be passed as `store=` if they expose `.dense` and `.sparse`.

@@ -1,0 +1,12 @@
+Memotrix File Upload Test
+
+This is a sample document used to verify the ingestion pipeline.
+
+## Features
+- Extract text from real files on disk
+- Chunk content into searchable pieces
+- Index with dense and sparse vector stores
+- Run hybrid retrieval against your uploaded file
+
+## Keywords
+vector database, hybrid search, BM25, HNSW, embeddings

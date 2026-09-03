@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "memotrix"
+version = "0.1.0"
+description = "Composable hybrid memory / RAG framework for agents."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Memotrix" }]
+keywords = ["rag", "memory", "agents", "pgvector", "hybrid-search"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+postgres = [
+    "psycopg[binary]>=3.2.0",
+    "pgvector>=0.3.6",
+]
+local = [
+    "hnswlib>=0.8.0",
+    "rank-bm25>=0.2.2",
+    "numpy>=1.26.0",
+]
+embeddings = [
+    "sentence-transformers>=3.0.0",
+]
+extractors = [
+    "pymupdf>=1.24.0",
+    "python-docx>=1.1.0",
+    "python-pptx>=1.0.0",
+    "openpyxl>=3.1.0",
+    "pandas>=2.2.0",
+    "Pillow>=10.0.0",
+    "pillow-heif",
+    "PyYAML>=6.0",
+    "beautifulsoup4>=4.12.0",
+    "rdflib>=7.0.0",
+]
+openai = [
+    "openai>=1.40.0",
+]
+audio = [
+    "faster-whisper>=1.0.0",
+]
+dev = [
+    "pytest>=8.0.0",
+]
+memory = [
+    "memotrix[local,embeddings]",
+]
+all = [
+    "memotrix[postgres,local,embeddings,extractors,openai,audio]",
+]
+
+[project.urls]
+Homepage = "https://github.com/memotrix/memotrix"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+memotrix = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

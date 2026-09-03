@@ -1,0 +1,699 @@
+{
+  "summary": {
+    "n_queries": 45,
+    "recall_at_k": 0.9777777777777777,
+    "mrr": 0.9229629629629629,
+    "latency_ms_mean": 621.4741111110319,
+    "latency_ms_p50": 630.8460000000196,
+    "latency_ms_p95": 769.4528599999102,
+    "top_k": 5,
+    "expand_mode": "neighbors",
+    "embedding_model": "all-MiniLM-L6-v2",
+    "misses": [
+      "q31"
+    ]
+  },
+  "config": {
+    "eval_set": "C:\\Users\\matrixboy\\OneDrive\\Desktop\\Memotrix\\tests\\eval_set.jsonl",
+    "corpus": "C:\\Users\\matrixboy\\OneDrive\\Desktop\\Memotrix\\tests\\fixtures\\agent_memory",
+    "max_tokens_returned": 800,
+    "legacy_full_file": false
+  },
+  "per_query": [
+    {
+      "id": "q01",
+      "query": "What UI theme does the user prefer?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 976.6162999994776,
+      "top_sources": [
+        "user_preferences.md",
+        "user_working_style.md",
+        "user_preferences.md",
+        "semantic_product.md",
+        "procedures_deploy.md"
+      ],
+      "matched_contains": "dark mode"
+    },
+    {
+      "id": "q02",
+      "query": "What timezone should the agent assume for the user?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 643.5731999999916,
+      "top_sources": [
+        "user_preferences.md",
+        "bugs_known.md",
+        "session_2026_07_10.md",
+        "session_2026_07_10.md",
+        "team_contacts.md"
+      ],
+      "matched_contains": "Asia/Kolkata"
+    },
+    {
+      "id": "q03",
+      "query": "What date format does the user want?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 596.5351000004375,
+      "top_sources": [
+        "user_preferences.md",
+        "user_preferences.md",
+        "procedures_add_filetype.md",
+        "user_preferences.md",
+        "procedures_add_filetype.md"
+      ],
+      "matched_contains": "YYYY-MM-DD"
+    },
+    {
+      "id": "q04",
+      "query": "Which fonts should we avoid on branded frontend work?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 635.8814999994138,
+      "top_sources": [
+        "user_preferences.md",
+        "user_working_style.md",
+        "team_contacts.md",
+        "user_preferences.md",
+        "user_preferences.md"
+      ],
+      "matched_contains": "Inter, Roboto, and Arial"
+    },
+    {
+      "id": "q05",
+      "query": "What is the user's Cursor font size preference?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 494.7830000000977,
+      "top_sources": [
+        "user_preferences.md",
+        "project_memotrix_decisions.md",
+        "user_preferences.md",
+        "session_2026_07_12.md",
+        "project_memotrix_decisions.md"
+      ],
+      "matched_contains": "font size preference is 14"
+    },
+    {
+      "id": "q06",
+      "query": "Where does Memotrix store vectors in production?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 639.6407000002,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "semantic_product.md",
+        "semantic_product.md",
+        "session_2026_07_10.md",
+        "project_memotrix_decisions.md"
+      ],
+      "matched_contains": "PostgreSQL with pgvector"
+    },
+    {
+      "id": "q07",
+      "query": "What fusion method does hybrid search use?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 601.0120999999344,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "session_2026_07_12.md",
+        "semantic_product.md",
+        "procedures_deploy.md",
+        "procedures_add_filetype.md"
+      ],
+      "matched_contains": "Reciprocal Rank Fusion"
+    },
+    {
+      "id": "q08",
+      "query": "What is the current embedding model?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 579.3421000007584,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "session_2026_07_10.md",
+        "session_2026_07_10.md",
+        "semantic_product.md",
+        "semantic_product.md"
+      ],
+      "matched_contains": "all-MiniLM-L6-v2"
+    },
+    {
+      "id": "q09",
+      "query": "What CHUNK_SIZE does Memotrix use by default?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 609.3528000001243,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "project_memotrix_decisions.md",
+        "semantic_product.md",
+        "session_2026_07_12.md",
+        "session_2026_07_10.md"
+      ],
+      "matched_contains": "CHUNK_SIZE is 500"
+    },
+    {
+      "id": "q10",
+      "query": "Which embedding model is the planned upgrade target?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 612.9592999996021,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "session_2026_07_10.md",
+        "team_contacts.md",
+        "session_2026_07_10.md",
+        "bugs_known.md"
+      ],
+      "matched_contains": "bge-small-en-v1.5"
+    },
+    {
+      "id": "q11",
+      "query": "Why must Memotrix queries stay low-latency for context-gate?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 715.5196999992768,
+      "top_sources": [
+        "session_2026_07_10.md",
+        "semantic_product.md",
+        "semantic_product.md",
+        "session_2026_07_12.md",
+        "team_contacts.md"
+      ],
+      "matched_contains": "nearly every reasoning step"
+    },
+    {
+      "id": "q12",
+      "query": "Why is full-file expansion wrong for agent memory?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 645.1162000003023,
+      "top_sources": [
+        "session_2026_07_10.md",
+        "session_2026_07_12.md",
+        "bugs_known.md",
+        "team_contacts.md",
+        "semantic_product.md"
+      ],
+      "matched_contains": "hard context budgets"
+    },
+    {
+      "id": "q13",
+      "query": "What metrics should the eval harness measure?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 611.6894999995566,
+      "top_sources": [
+        "session_2026_07_10.md",
+        "semantic_product.md",
+        "procedures_add_filetype.md",
+        "project_memotrix_decisions.md",
+        "user_preferences.md"
+      ],
+      "matched_contains": "Recall@5, MRR"
+    },
+    {
+      "id": "q14",
+      "query": "What is still undecided about the embedding upgrade?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 633.4717999998247,
+      "top_sources": [
+        "session_2026_07_10.md",
+        "project_memotrix_decisions.md",
+        "team_contacts.md",
+        "session_2026_07_10.md",
+        "procedures_deploy.md"
+      ],
+      "matched_contains": "nomic-embed-text-v1.5"
+    },
+    {
+      "id": "q15",
+      "query": "How do I start local Postgres for Memotrix?",
+      "hit": true,
+      "reciprocal_rank": 0.5,
+      "latency_ms": 660.186000000067,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "procedures_deploy.md",
+        "semantic_product.md",
+        "semantic_product.md",
+        "session_2026_07_10.md"
+      ],
+      "matched_contains": "docker compose up -d"
+    },
+    {
+      "id": "q16",
+      "query": "Where do Postgres credentials come from?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 556.6909999997733,
+      "top_sources": [
+        "procedures_deploy.md",
+        "project_memotrix_decisions.md",
+        "project_memotrix_decisions.md",
+        "team_contacts.md",
+        "team_contacts.md"
+      ],
+      "matched_contains": ".env file"
+    },
+    {
+      "id": "q17",
+      "query": "Should we force-push to main?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 463.2601000002978,
+      "top_sources": [
+        "procedures_deploy.md",
+        "user_working_style.md",
+        "session_2026_07_12.md",
+        "session_2026_07_10.md",
+        "user_preferences.md"
+      ],
+      "matched_contains": "Never force-push to main"
+    },
+    {
+      "id": "q18",
+      "query": "What is broken about CSV ingestion?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 621.5119999997114,
+      "top_sources": [
+        "bugs_known.md",
+        "procedures_add_filetype.md",
+        "semantic_product.md",
+        "procedures_deploy.md",
+        "bugs_known.md"
+      ],
+      "matched_contains": "headers-only"
+    },
+    {
+      "id": "q19",
+      "query": "What happens to old chunks when a file is re-ingested?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 636.8692999994892,
+      "top_sources": [
+        "bugs_known.md",
+        "semantic_product.md",
+        "procedures_add_filetype.md",
+        "bugs_known.md",
+        "procedures_deploy.md"
+      ],
+      "matched_contains": "does not delete prior chunks"
+    },
+    {
+      "id": "q20",
+      "query": "How many chunks should agent retrieval return?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 587.6435999998648,
+      "top_sources": [
+        "bugs_known.md",
+        "session_2026_07_10.md",
+        "session_2026_07_10.md",
+        "session_2026_07_12.md",
+        "session_2026_07_12.md"
+      ],
+      "matched_contains": "two to three"
+    },
+    {
+      "id": "q21",
+      "query": "Who is the project owner?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 427.0655000000261,
+      "top_sources": [
+        "team_contacts.md",
+        "team_contacts.md",
+        "semantic_product.md",
+        "semantic_product.md",
+        "project_memotrix_decisions.md"
+      ],
+      "matched_contains": "matrixboy"
+    },
+    {
+      "id": "q22",
+      "query": "Where does the upgrade roadmap live?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 662.3497999999017,
+      "top_sources": [
+        "team_contacts.md",
+        "project_memotrix_decisions.md",
+        "session_2026_07_10.md",
+        "session_2026_07_12.md",
+        "procedures_add_filetype.md"
+      ],
+      "matched_contains": "upgrade.md"
+    },
+    {
+      "id": "q23",
+      "query": "What should PR summaries include?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 630.8460000000196,
+      "top_sources": [
+        "team_contacts.md",
+        "procedures_deploy.md",
+        "user_preferences.md",
+        "user_working_style.md",
+        "procedures_add_filetype.md"
+      ],
+      "matched_contains": "Test plan checklists"
+    },
+    {
+      "id": "q24",
+      "query": "What is Memotrix?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 413.5320999994292,
+      "top_sources": [
+        "semantic_product.md",
+        "semantic_product.md",
+        "project_memotrix_decisions.md",
+        "session_2026_07_10.md",
+        "team_contacts.md"
+      ],
+      "matched_contains": "multimodal AI memory / RAG pipeline"
+    },
+    {
+      "id": "q25",
+      "query": "Is Memotrix a chat UI?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 443.8671999996586,
+      "top_sources": [
+        "semantic_product.md",
+        "semantic_product.md",
+        "project_memotrix_decisions.md",
+        "session_2026_07_10.md",
+        "user_preferences.md"
+      ],
+      "matched_contains": "not a chat UI"
+    },
+    {
+      "id": "q26",
+      "query": "How should retrieval accuracy be judged?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 441.8582999996943,
+      "top_sources": [
+        "semantic_product.md",
+        "session_2026_07_10.md",
+        "bugs_known.md",
+        "procedures_add_filetype.md",
+        "session_2026_07_10.md"
+      ],
+      "matched_contains": "measured with an eval set"
+    },
+    {
+      "id": "q27",
+      "query": "How do I add support for a new file type?",
+      "hit": true,
+      "reciprocal_rank": 0.3333333333333333,
+      "latency_ms": 649.3780000000697,
+      "top_sources": [
+        "user_working_style.md",
+        "procedures_add_filetype.md",
+        "procedures_add_filetype.md",
+        "procedures_deploy.md",
+        "session_2026_07_10.md"
+      ],
+      "matched_contains": "Create an extractor under src/filetypes"
+    },
+    {
+      "id": "q28",
+      "query": "What shared schema should new extractors normalize into?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 670.845399999962,
+      "top_sources": [
+        "procedures_add_filetype.md",
+        "bugs_known.md",
+        "procedures_add_filetype.md",
+        "session_2026_07_10.md",
+        "user_working_style.md"
+      ],
+      "matched_contains": "DocumentData"
+    },
+    {
+      "id": "q29",
+      "query": "What validation is required when adding a file type?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 508.773000000474,
+      "top_sources": [
+        "procedures_add_filetype.md",
+        "user_working_style.md",
+        "procedures_deploy.md",
+        "procedures_deploy.md",
+        "session_2026_07_12.md"
+      ],
+      "matched_contains": "Recall@5 drops"
+    },
+    {
+      "id": "q30",
+      "query": "Why did the agent answer incorrectly on 2026-07-12 despite a correct hybrid hit?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 748.9039000001867,
+      "top_sources": [
+        "session_2026_07_12.md",
+        "session_2026_07_10.md",
+        "procedures_deploy.md",
+        "project_memotrix_decisions.md",
+        "bugs_known.md"
+      ],
+      "matched_contains": "expanded full file drowned the matched sentence"
+    },
+    {
+      "id": "q31",
+      "query": "What was the root cause of the July 12 debugging session?",
+      "hit": false,
+      "reciprocal_rank": 0.0,
+      "latency_ms": 690.16720000036,
+      "top_sources": [
+        "user_preferences.md",
+        "procedures_add_filetype.md",
+        "semantic_product.md",
+        "user_preferences.md",
+        "team_contacts.md"
+      ],
+      "matched_contains": null
+    },
+    {
+      "id": "q32",
+      "query": "What expansion strategy replaces full-file expansion?",
+      "hit": true,
+      "reciprocal_rank": 0.2,
+      "latency_ms": 669.1433999994842,
+      "top_sources": [
+        "session_2026_07_10.md",
+        "bugs_known.md",
+        "session_2026_07_12.md",
+        "session_2026_07_12.md",
+        "session_2026_07_12.md"
+      ],
+      "matched_contains": "previous and next chunks"
+    },
+    {
+      "id": "q33",
+      "query": "When should the agent create git commits?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 645.6994000000122,
+      "top_sources": [
+        "user_working_style.md",
+        "team_contacts.md",
+        "procedures_deploy.md",
+        "session_2026_07_10.md",
+        "team_contacts.md"
+      ],
+      "matched_contains": "Only commit when asked"
+    },
+    {
+      "id": "q34",
+      "query": "What frontend theme anti-pattern should we avoid?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 662.0500999997603,
+      "top_sources": [
+        "user_working_style.md",
+        "user_preferences.md",
+        "team_contacts.md",
+        "session_2026_07_10.md",
+        "user_preferences.md"
+      ],
+      "matched_contains": "purple-on-white"
+    },
+    {
+      "id": "q35",
+      "query": "Are cards allowed by default in UI design?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 774.5900999998412,
+      "top_sources": [
+        "user_working_style.md",
+        "user_preferences.md",
+        "semantic_product.md",
+        "user_preferences.md",
+        "project_memotrix_decisions.md"
+      ],
+      "matched_contains": "Default: no cards"
+    },
+    {
+      "id": "q36",
+      "query": "What is the primary table name for chunks?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 788.451399999758,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "project_memotrix_decisions.md",
+        "procedures_add_filetype.md",
+        "semantic_product.md",
+        "session_2026_07_12.md"
+      ],
+      "matched_contains": "memotrix_chunks"
+    },
+    {
+      "id": "q37",
+      "query": "Which reranker model is used?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 547.2037999998065,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "semantic_product.md",
+        "project_memotrix_decisions.md",
+        "session_2026_07_10.md",
+        "semantic_product.md"
+      ],
+      "matched_contains": "ms-marco-MiniLM-L-6-v2"
+    },
+    {
+      "id": "q38",
+      "query": "Does chunking ever split mid-word?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 674.5837000007668,
+      "top_sources": [
+        "project_memotrix_decisions.md",
+        "session_2026_07_12.md",
+        "session_2026_07_12.md",
+        "session_2026_07_10.md",
+        "procedures_deploy.md"
+      ],
+      "matched_contains": "never mid-word"
+    },
+    {
+      "id": "q39",
+      "query": "What parameter lets context-gate pass remaining context window size?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 590.3454999997848,
+      "top_sources": [
+        "session_2026_07_12.md",
+        "session_2026_07_10.md",
+        "team_contacts.md",
+        "bugs_known.md",
+        "semantic_product.md"
+      ],
+      "matched_contains": "max_tokens_returned"
+    },
+    {
+      "id": "q40",
+      "query": "What density preference does the user have for lists?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 636.6907999999967,
+      "top_sources": [
+        "user_preferences.md",
+        "user_preferences.md",
+        "project_memotrix_decisions.md",
+        "procedures_add_filetype.md",
+        "user_preferences.md"
+      ],
+      "matched_contains": "compact density"
+    },
+    {
+      "id": "q41",
+      "query": "Should .env be committed?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 577.2062999994887,
+      "top_sources": [
+        "procedures_deploy.md",
+        "user_working_style.md",
+        "procedures_deploy.md",
+        "session_2026_07_10.md",
+        "team_contacts.md"
+      ],
+      "matched_contains": "Do not commit .env"
+    },
+    {
+      "id": "q42",
+      "query": "What working hours overlap for the project owner?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 627.5983999994423,
+      "top_sources": [
+        "team_contacts.md",
+        "project_memotrix_decisions.md",
+        "team_contacts.md",
+        "user_preferences.md",
+        "user_preferences.md"
+      ],
+      "matched_contains": "Asia/Kolkata evenings"
+    },
+    {
+      "id": "q43",
+      "query": "Why does latency per query matter for Memotrix?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 627.5730000006661,
+      "top_sources": [
+        "semantic_product.md",
+        "session_2026_07_10.md",
+        "semantic_product.md",
+        "session_2026_07_10.md",
+        "semantic_product.md"
+      ],
+      "matched_contains": "agents call memory constantly"
+    },
+    {
+      "id": "q44",
+      "query": "What should happen if the shared harness Recall@5 drops after a filetype change?",
+      "hit": true,
+      "reciprocal_rank": 1.0,
+      "latency_ms": 735.2602999999363,
+      "top_sources": [
+        "procedures_add_filetype.md",
+        "session_2026_07_10.md",
+        "bugs_known.md",
+        "procedures_add_filetype.md",
+        "bugs_known.md"
+      ],
+      "matched_contains": "investigate before merging"
+    },
+    {
+      "id": "q45",
+      "query": "What should Stage 4 keep when expanding context?",
+      "hit": true,
+      "reciprocal_rank": 0.5,
+      "latency_ms": 600.6970999997066,
+      "top_sources": [
+        "session_2026_07_12.md",
+        "session_2026_07_12.md",
+        "bugs_known.md",
+        "session_2026_07_10.md",
+        "session_2026_07_10.md"
+      ],
+      "matched_contains": "Keep matched_chunk"
+    }
+  ]
+}

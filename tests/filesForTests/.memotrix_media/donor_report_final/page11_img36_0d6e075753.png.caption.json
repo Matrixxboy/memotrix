@@ -1,0 +1,13 @@
+{
+  "description": "AI model not configured. Prompt received: You are an expert document OCR + image captioning model for a retrieval system.\n\nDocument context: PDF page 11 embedded image\n\nProduce a searchable description of this image with these sections:\n\n1) T",
+  "caption": "other from page11_img36_0d6e075753.png",
+  "visual_kind": "other",
+  "is_decorative": false,
+  "tags": [
+    "png",
+    "979x742",
+    "PDF_page_11_embedded_image",
+    "other"
+  ],
+  "context": "PDF page 11 embedded image"
+}

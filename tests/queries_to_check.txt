@@ -1,0 +1,3 @@
+Find information about dogs.
+Show me the user information table
+What is machine learning?
