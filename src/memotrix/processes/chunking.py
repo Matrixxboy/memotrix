@@ -193,6 +193,26 @@ def chunk_text(
     )
 
 
+def _extract_page_metadata(title: str) -> Dict[str, Any]:
+    meta: Dict[str, Any] = {}
+    if not title:
+        return meta
+
+    page_m = re.search(r"\bPage\s+(\d+)\b", title, re.I)
+    if page_m:
+        meta["page_number"] = int(page_m.group(1))
+
+    slide_m = re.search(r"\bSlide\s+(\d+)\b", title, re.I)
+    if slide_m:
+        meta["slide_number"] = int(slide_m.group(1))
+
+    sheet_m = re.search(r"\bSheet:\s*([^\n|]+)", title, re.I)
+    if sheet_m:
+        meta["sheet_name"] = sheet_m.group(1).strip()
+
+    return meta
+
+
 def chunk_document(
     doc: DocumentData,
     *,
@@ -212,6 +232,9 @@ def chunk_document(
         and doc.metadata.get("file_type") in {"excel", "csv", "xlsx", "xls"}
     )
 
+    doc_name = doc.metadata.get("filename") or doc.metadata.get("source_path") or ""
+    doc_name = Path(doc_name).name if doc_name else ""
+
     if not skip_sections:
         for section in doc.sections:
             title = section.get("title", "")
@@ -220,20 +243,36 @@ def chunk_document(
             if not content.strip():
                 continue
 
+            page_meta = _extract_page_metadata(title)
             splits = chunk_text(content, chunk_size=chunk_size, overlap=overlap)
             for i, split in enumerate(splits):
+                header_parts = []
+                if doc_name:
+                    header_parts.append(f"Document: {doc_name}")
+                if "page_number" in page_meta:
+                    header_parts.append(f"Page: {page_meta['page_number']}")
+                elif "slide_number" in page_meta:
+                    header_parts.append(f"Slide: {page_meta['slide_number']}")
+                elif title:
+                    header_parts.append(f"Section: {title}")
+
+                header = f"[{' | '.join(header_parts)}]\n" if header_parts else ""
+                full_text = f"{header}{split}" if header and not split.startswith("[") else split
+
                 payload = {
                     **doc.metadata,
+                    **page_meta,
                     "type": "text",
                     "section_title": title,
                     "chunk_index": i,
-                    "chunk_text": split,
+                    "chunk_text": full_text,
+                    "raw_text": split,
                 }
-                chunk_id = generate_chunk_id(split, payload)
+                chunk_id = generate_chunk_id(full_text, payload)
                 chunks.append(
                     Chunk(
                         id=chunk_id,
-                        text=split,
+                        text=full_text,
                         is_dense_indexable=True,
                         is_sparse_indexable=True,
                         payload=payload,
@@ -252,9 +291,12 @@ def chunk_document(
             batch_size = 8
             for start in range(0, len(rows), batch_size):
                 batch = rows[start : start + batch_size]
-                line_parts = [f"Table columns: {header_line}"]
+                line_parts = []
+                if doc_name:
+                    line_parts.append(f"[Document: {doc_name} | Table]")
                 if sheet:
-                    line_parts.insert(0, f"Sheet: {sheet}")
+                    line_parts.append(f"Sheet: {sheet}")
+                line_parts.append(f"Table columns: {header_line}")
                 for row in batch:
                     width = len(headers)
                     padded = (list(row) + [""] * width)[:width]
@@ -289,6 +331,9 @@ def chunk_document(
             table_text = table["text"]
         else:
             table_text = f"Table containing columns: {', '.join(headers)}."
+
+        if doc_name:
+            table_text = f"[Document: {doc_name} | Table]\n{table_text}"
 
         payload = {
             **doc.metadata,
@@ -340,6 +385,9 @@ def chunk_document(
             is_decorative=is_decorative,
         )
 
+        if doc_name:
+            search_text = f"[Document: {doc_name} | Image]\n{search_text}"
+
         payload = {
             **doc.metadata,
             "type": "image",
@@ -364,6 +412,8 @@ def chunk_document(
 
     if getattr(doc, "summary", None):
         summary_text = doc.summary
+        if doc_name:
+            summary_text = f"[Document: {doc_name} | Summary]\n{summary_text}"
         payload = {
             **doc.metadata,
             "type": "summary",
@@ -399,19 +449,20 @@ def chunk_document(
                 current_chunk_text += " " + text
                 current_end = end
             else:
+                full_t_text = f"[Document: {doc_name} | Audio Transcript]\n{current_chunk_text}" if doc_name else current_chunk_text
                 payload = {
                     **doc.metadata,
                     "type": "transcript",
                     "chunk_index": chunk_index,
                     "start_time": current_start,
                     "end_time": current_end,
-                    "chunk_text": current_chunk_text,
+                    "chunk_text": full_t_text,
                 }
-                chunk_id = generate_chunk_id(current_chunk_text, payload)
+                chunk_id = generate_chunk_id(full_t_text, payload)
                 chunks.append(
                     Chunk(
                         id=chunk_id,
-                        text=current_chunk_text,
+                        text=full_t_text,
                         is_dense_indexable=True,
                         is_sparse_indexable=True,
                         payload=payload,
@@ -423,19 +474,20 @@ def chunk_document(
                 current_end = end
                 
         if current_chunk_text:
+            full_t_text = f"[Document: {doc_name} | Audio Transcript]\n{current_chunk_text}" if doc_name else current_chunk_text
             payload = {
                 **doc.metadata,
                 "type": "transcript",
                 "chunk_index": chunk_index,
                 "start_time": current_start,
                 "end_time": current_end,
-                "chunk_text": current_chunk_text,
+                "chunk_text": full_t_text,
             }
-            chunk_id = generate_chunk_id(current_chunk_text, payload)
+            chunk_id = generate_chunk_id(full_t_text, payload)
             chunks.append(
                 Chunk(
                     id=chunk_id,
-                    text=current_chunk_text,
+                    text=full_t_text,
                     is_dense_indexable=True,
                     is_sparse_indexable=True,
                     payload=payload,

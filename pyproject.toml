@@ -1,77 +1,149 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = [
+    "setuptools>=68",
+    "wheel",
+]
 build-backend = "setuptools.build_meta"
+
 
 [project]
 name = "memotrix"
-version = "0.1.0"
-description = "Composable hybrid memory / RAG framework for agents."
-readme = "README.md"
+version = "0.2.0"
+
+description = "Composable hybrid memory and RAG framework for building intelligent AI agents."
+
+readme = "pypi.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
-authors = [{ name = "Memotrix" }]
-keywords = ["rag", "memory", "agents", "pgvector", "hybrid-search"]
+
+authors = [
+    { name = "Utsav Lankapati" },
+]
+
+maintainers = [
+    { name = "Utsav Lankapati" },
+]
+
+keywords = [
+    "ai",
+    "agents",
+    "memory",
+    "agent-memory",
+    "long-term-memory",
+    "rag",
+    "retrieval-augmented-generation",
+    "retrieval",
+    "semantic-search",
+    "hybrid-search",
+    "vector-search",
+    "keyword-search",
+    "pgvector",
+    "postgresql",
+    "hnsw",
+    "bm25",
+    "embeddings",
+]
+
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+
 dependencies = [
     "python-dotenv>=1.0.0",
 ]
 
+
 [project.optional-dependencies]
+
 postgres = [
     "psycopg[binary]>=3.2.0",
     "pgvector>=0.3.6",
 ]
+
 local = [
     "hnswlib>=0.8.0",
     "rank-bm25>=0.2.2",
     "numpy>=1.26.0",
 ]
+
 embeddings = [
     "sentence-transformers>=3.0.0",
 ]
-extractors = [
-    "pymupdf>=1.24.0",
-    "python-docx>=1.1.0",
-    "python-pptx>=1.0.0",
-    "openpyxl>=3.1.0",
-    "pandas>=2.2.0",
-    "Pillow>=10.0.0",
-    "pillow-heif",
-    "PyYAML>=6.0",
-    "beautifulsoup4>=4.12.0",
-    "rdflib>=7.0.0",
-]
+
+# Granular Extractors
+pdf = ["pymupdf>=1.24.0"]
+docx = ["python-docx>=1.1.0"]
+pptx = ["python-pptx>=1.0.0"]
+excel = ["openpyxl>=3.1.0", "pandas>=2.2.0"]
+images = ["Pillow>=10.0.0", "pillow-heif"]
+html = ["beautifulsoup4>=4.12.0"]
+knowledge = ["rdflib>=7.0.0"]
+yaml = ["PyYAML>=6.0"]
+
+# Groups
+documents = ["memotrix[pdf,docx,pptx,excel,html]"]
+data = ["memotrix[excel,knowledge,yaml]"]
+all-extractors = ["memotrix[documents,data,images]"]
+
+# Backwards compatibility
+extractors = ["memotrix[all-extractors]"]
+
 openai = [
     "openai>=1.40.0",
 ]
+
 audio = [
     "faster-whisper>=1.0.0",
 ]
+
 dev = [
     "pytest>=8.0.0",
 ]
+
 memory = [
-    "memotrix[local,embeddings]",
+    "hnswlib>=0.8.0",
+    "rank-bm25>=0.2.2",
+    "numpy>=1.26.0",
+    "sentence-transformers>=3.0.0",
 ]
+
 all = [
-    "memotrix[postgres,local,embeddings,extractors,openai,audio]",
+    "memotrix[postgres,local,embeddings,all-extractors,openai,audio]",
 ]
+
 
 [project.urls]
-Homepage = "https://github.com/memotrix/memotrix"
+Homepage = "https://github.com/Matrixxboy/memotrix"
+Repository = "https://github.com/Matrixxboy/memotrix"
+Issues = "https://github.com/Matrixxboy/memotrix/issues"
+
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = [
+    "src",
+]
+
 
 [tool.setuptools.package-data]
-memotrix = ["py.typed"]
+memotrix = [
+    "py.typed",
+]
+
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["src"]
+testpaths = [
+    "tests",
+]
+
+pythonpath = [
+    "src",
+]

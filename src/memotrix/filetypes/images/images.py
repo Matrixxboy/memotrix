@@ -45,7 +45,8 @@ class ImageExtractor:
                 import pillow_heif
                 pillow_heif.register_heif_opener()
             except ImportError as exc:
-                raise RuntimeError("pillow-heif is required to extract .heic files") from exc
+                from memotrix.utils.exceptions import MissingDependencyError
+                raise MissingDependencyError(f"Missing optional dependency. Please install the required extras.") from exc
 
         path_to_open = path
         tmp_png_path = None
@@ -59,7 +60,8 @@ class ImageExtractor:
                 cairosvg.svg2png(url=str(path), write_to=str(tmp_png_path))
                 path_to_open = tmp_png_path
             except ImportError as exc:
-                raise RuntimeError("cairosvg is required to extract .svg files") from exc
+                from memotrix.utils.exceptions import MissingDependencyError
+                raise MissingDependencyError(f"Missing optional dependency. Please install the required extras.") from exc
 
         try:
             with PILImage.open(path_to_open) as image:

@@ -33,7 +33,7 @@ The sdist / wheel is built from `memory/` with `setuptools` (`packages.find` whe
 
 - `memotrix` package under `src/`
 - `py.typed`
-- `README.md` (as the PyPI long description)
+- `pypi.md` (as the PyPI long description / About panel)
 - `LICENSE`
 
 Not included (and should stay out): `.env`, test files, eval JSON, `__pycache__`, local media folders (`.memotrix_media`).

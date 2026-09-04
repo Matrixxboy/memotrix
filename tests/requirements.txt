@@ -1,0 +1,4 @@
+# Requirements for running memotrix test suite (tests/test_local_upload.py)
+# Install via: pip install -r tests/requirements.txt
+
+-r ../requirements-test.txt

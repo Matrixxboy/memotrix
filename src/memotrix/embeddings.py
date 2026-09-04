@@ -188,12 +188,20 @@ class OpenAIEmbeddings(Embeddings):
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         if not texts:
             return []
-        response = self.client.embeddings.create(model=self._model_name, input=list(texts))
-        ordered = sorted(response.data, key=lambda item: item.index)
-        vectors = [list(item.embedding) for item in ordered]
-        if self._dimension is None and vectors:
-            self._dimension = len(vectors[0])
-        return vectors
+        
+        batch_size = 500
+        all_vectors = []
+        texts_list = list(texts)
+        
+        for i in range(0, len(texts_list), batch_size):
+            batch_texts = texts_list[i : i + batch_size]
+            response = self.client.embeddings.create(model=self._model_name, input=batch_texts)
+            ordered = sorted(response.data, key=lambda item: item.index)
+            all_vectors.extend([list(item.embedding) for item in ordered])
+            
+        if self._dimension is None and all_vectors:
+            self._dimension = len(all_vectors[0])
+        return all_vectors
 
     def embed_query(self, text: str) -> List[float]:
         vectors = self.embed_documents([text])

@@ -14,7 +14,8 @@ class PPTXExtractor(BaseExtractor):
             from pptx import Presentation
             from pptx.enum.shapes import MSO_SHAPE_TYPE
         except ImportError as exc:  # pragma: no cover
-            raise RuntimeError("python-pptx is required for PPTX extraction") from exc
+            from memotrix.utils.exceptions import MissingDependencyError
+            raise MissingDependencyError("python-pptx is required for PPTX extraction. Run `pip install memotrix[pptx]`.") from exc
 
         from memotrix.utils.trace import mlog
 
@@ -41,7 +42,8 @@ class PPTXExtractor(BaseExtractor):
                     try:
                         image = shape.image
                         blob = image.blob
-                    except Exception:
+                    except Exception as e:
+                        mlog("pptx", f"Warning: Failed to extract image on slide {slide_no}: {e}")
                         continue
                     if not blob:
                         continue

@@ -16,3 +16,7 @@ class EmptyDocumentError(DocumentExtractionError):
 
 class ExtractionBackendError(DocumentExtractionError):
     """Raised when an optional backend for a document type is unavailable."""
+
+
+class MissingDependencyError(Exception):
+    """Raised when an optional dependency is required but not installed."""

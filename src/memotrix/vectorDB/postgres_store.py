@@ -331,6 +331,42 @@ class PostgresChunkStore:
             if float(row["score"]) > 0.0
         ]
 
+        if results:
+            return results
+
+        # Fallback to plainto_tsquery if websearch_to_tsquery returned 0 hits
+        where_plain = sql.SQL(
+            "WHERE search_vector @@ plainto_tsquery('english', %s)"
+        )
+        if filter_sql:
+            where_plain = sql.SQL("{} AND {}").format(
+                where_plain, sql.SQL(" AND ").join(filter_sql)
+            )
+
+        query_plain = sql.SQL(
+            """
+            SELECT
+                id,
+                ts_rank_cd(search_vector, plainto_tsquery('english', %s)) AS score,
+                payload
+            FROM {table}
+            {where}
+            ORDER BY score DESC
+            LIMIT %s
+            """
+        ).format(table=sql.Identifier(self.table_name), where=where_plain)
+
+        params_plain = [query_text, query_text, *filter_params, k]
+        with conn.cursor(row_factory=dict_row) as cur:
+            cur.execute(query_plain, params_plain)
+            rows_plain = cur.fetchall()
+
+        return [
+            (row["id"], float(row["score"]), dict(row["payload"]))
+            for row in rows_plain
+            if float(row["score"]) > 0.0
+        ]
+
     def clear(self) -> None:
         conn = self.connect()
         conn.execute(

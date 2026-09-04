@@ -33,24 +33,28 @@ _GEO_EXTENSIONS = GeoJSONExtractor.supported_extensions
 _LOG_EXTENSIONS = LogExtractor.supported_extensions
 _AUDIO_EXTENSIONS = AudioExtractor.supported_extensions
 
+from memotrix.filetypes.registry import ExtractorRegistry, register_extractor
+
 
 def supported_extensions() -> List[str]:
     """Extensions routed by ``extract_file`` (wired extractors only)."""
     return sorted(
-        {
-            *DocumentExtractor.EXTRACTORS.keys(),
-            *StructuredDataExtractor.EXTRACTORS.keys(),
-            *ImageExtractor.SUPPORTED_EXTENSIONS,
-            *VideoExtractor.supported_extensions,
-            *ScormExtractor.supported_extensions,
-            *ProgrammingFileExtractor.supported_extensions,
-            *_AUDIO_EXTENSIONS,
-            *_KG_EXTENSIONS,
-            *_EMAIL_EXTENSIONS,
-            *_GEO_EXTENSIONS,
-            *_LOG_EXTENSIONS,
-            ".jsonl",
-        }
+        list(
+            {
+                *DocumentExtractor.EXTRACTORS.keys(),
+                *StructuredDataExtractor.EXTRACTORS.keys(),
+                *ImageExtractor.SUPPORTED_EXTENSIONS,
+                *VideoExtractor.supported_extensions,
+                *ScormExtractor.supported_extensions,
+                *ProgrammingFileExtractor.supported_extensions,
+                *_AUDIO_EXTENSIONS,
+                *_KG_EXTENSIONS,
+                *_EMAIL_EXTENSIONS,
+                *_GEO_EXTENSIONS,
+                *_LOG_EXTENSIONS,
+                ".jsonl",
+            } | set(ExtractorRegistry.supported_extensions())
+        )
     )
 
 
@@ -127,6 +131,17 @@ def extract_file(
     path = Path(path)
     suffix = path.suffix.lower()
 
+    # 1. Check Extractor Registry first
+    custom_extractor = ExtractorRegistry.get_extractor(suffix)
+    if custom_extractor:
+        # custom_extractor can be a class instance or a function.
+        # We try to call `.extract()` if it exists, else call it as a function.
+        if hasattr(custom_extractor, "extract"):
+            return custom_extractor.extract(path)
+        else:
+            return custom_extractor(path)
+
+    # 2. Fallback to builtin routing
     if suffix in _KG_EXTENSIONS:
         return KnowledgeGraphExtractor().extract(path)
     if suffix in _GEO_EXTENSIONS:

@@ -18,7 +18,8 @@ class PDFExtractor(BaseExtractor):
         try:
             import fitz
         except ImportError as exc:  # pragma: no cover
-            raise RuntimeError("PyMuPDF (fitz) is required for PDF extraction") from exc
+            from memotrix.utils.exceptions import MissingDependencyError
+            raise MissingDependencyError("PyMuPDF (fitz) is required for PDF extraction. Run `pip install memotrix[pdf]`.") from exc
 
         from memotrix.utils.trace import mlog
 
@@ -66,7 +67,8 @@ class PDFExtractor(BaseExtractor):
                 seen_xrefs.add(xref)
                 try:
                     extracted = doc.extract_image(xref)
-                except Exception:
+                except Exception as e:
+                    mlog("pdf", f"Warning: Failed to extract image xref {xref} on page {page_no}: {e}")
                     continue
                 img_bytes = extracted.get("image")
                 if not img_bytes:

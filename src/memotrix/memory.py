@@ -50,11 +50,14 @@ class Memory:
         self.connection: Optional[str] = None
         self._extract_file = extract_file
 
-        bundle = self._resolve_store(
+        bundle, final_connection = resolve_backend_store(
             store=store,
             connection=connection,
             backend=backend,
+            config=self.config,
+            embeddings=self.embeddings,
         )
+        self.connection = final_connection
         self._bundle = bundle
         self.dense = bundle.dense
         self.sparse = bundle.sparse
@@ -92,65 +95,6 @@ class Memory:
         )
         self._rehydrate_document_store()
 
-    def _resolve_store(
-        self,
-        *,
-        store: Any,
-        connection: Optional[str],
-        backend: Optional[str],
-    ) -> VectorStoreBundle:
-        if store is not None and not isinstance(store, str):
-            if isinstance(store, VectorStoreBundle):
-                return store
-            bundle = getattr(store, "bundle", None)
-            if isinstance(bundle, VectorStoreBundle):
-                self.connection = getattr(store, "connection", None) or connection
-                return bundle
-            dense = getattr(store, "dense", None)
-            sparse = getattr(store, "sparse", None)
-            if dense is not None and sparse is not None:
-                return VectorStoreBundle(
-                    dense=dense,
-                    sparse=sparse,
-                    native=getattr(store, "native", None),
-                )
-            raise ConfigurationError(
-                "store must be InMemoryStore, PostgresStore, or a bundle with dense+sparse indexes"
-            )
-
-        if isinstance(store, str):
-            backend_name = store
-        elif backend is not None:
-            backend_name = backend
-        elif connection:
-            backend_name = "postgres"
-        else:
-            backend_name = self.config.backend
-
-        if connection and backend_name == "memory":
-            raise ConfigurationError(
-                "connection= is incompatible with backend='memory'; "
-                "pass backend='postgres' or omit backend to auto-select postgres"
-            )
-
-        if backend_name == "postgres":
-            dsn = resolve_database_url(connection=connection or self.config.connection)
-            self.connection = dsn
-            pg = PostgresStore(
-                connection=dsn,
-                embeddings=self.embeddings,
-                table_name=self.config.table_name,
-            )
-            return pg.bundle
-        if backend_name in (None, "memory"):
-            mem = InMemoryStore(
-                self.embeddings,
-                max_elements=self.config.max_elements,
-            )
-            return mem.bundle
-        raise ConfigurationError(
-            f"Unknown memory backend {backend_name!r}; use 'memory' or 'postgres'"
-        )
 
     def _iter_payloads(self):
         iterator = getattr(self.dense, "iter_payloads", None)
@@ -350,3 +294,64 @@ class Memory:
 
 
 __all__ = ["Memory", "estimate_tokens"]
+
+
+def resolve_backend_store(
+    *,
+    store: Any,
+    connection: Optional[str],
+    backend: Optional[str],
+    config: MemoryConfig,
+    embeddings: Embeddings,
+) -> tuple[VectorStoreBundle, Optional[str]]:
+    """Resolves the correct vector store bundle and the final connection string."""
+    if store is not None and not isinstance(store, str):
+        if isinstance(store, VectorStoreBundle):
+            return store, connection
+        bundle = getattr(store, "bundle", None)
+        if isinstance(bundle, VectorStoreBundle):
+            return bundle, getattr(store, "connection", None) or connection
+        dense = getattr(store, "dense", None)
+        sparse = getattr(store, "sparse", None)
+        if dense is not None and sparse is not None:
+            return VectorStoreBundle(
+                dense=dense,
+                sparse=sparse,
+                native=getattr(store, "native", None),
+            ), connection
+        raise ConfigurationError(
+            "store must be InMemoryStore, PostgresStore, or a bundle with dense+sparse indexes"
+        )
+
+    if isinstance(store, str):
+        backend_name = store
+    elif backend is not None:
+        backend_name = backend
+    elif connection:
+        backend_name = "postgres"
+    else:
+        backend_name = config.backend
+
+    if connection and backend_name == "memory":
+        raise ConfigurationError(
+            "connection= is incompatible with backend='memory'; "
+            "pass backend='postgres' or omit backend to auto-select postgres"
+        )
+
+    if backend_name == "postgres":
+        dsn = resolve_database_url(connection=connection or config.connection)
+        pg = PostgresStore(
+            connection=dsn,
+            embeddings=embeddings,
+            table_name=config.table_name,
+        )
+        return pg.bundle, dsn
+    if backend_name in (None, "memory"):
+        mem = InMemoryStore(
+            embeddings,
+            max_elements=config.max_elements,
+        )
+        return mem.bundle, connection
+    raise ConfigurationError(
+        f"Unknown memory backend {backend_name!r}; use 'memory' or 'postgres'"
+    )

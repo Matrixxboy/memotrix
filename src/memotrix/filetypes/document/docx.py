@@ -13,14 +13,29 @@ class DOCXExtractor(BaseExtractor):
         try:
             from docx import Document as DocxDocument
         except ImportError as exc:  # pragma: no cover
-            raise RuntimeError("python-docx is required for DOCX extraction") from exc
+            from memotrix.utils.exceptions import MissingDependencyError
+            raise MissingDependencyError("python-docx is required for DOCX extraction. Run `pip install memotrix[docx]`.") from exc
 
         path = Path(path)
         doc = DocxDocument(str(path))
         out_dir = media_dir_for(path)
         skip_ai = not describe_images
 
-        paragraphs = [p.text.strip() for p in doc.paragraphs if p.text.strip()]
+        paragraphs_and_headings: List[str] = []
+        for p in doc.paragraphs:
+            txt = p.text.strip()
+            if not txt:
+                continue
+            style_name = getattr(p.style, "name", "") or ""
+            if "Heading 1" in style_name:
+                paragraphs_and_headings.append(f"# {txt}")
+            elif "Heading 2" in style_name:
+                paragraphs_and_headings.append(f"## {txt}")
+            elif "Heading" in style_name:
+                paragraphs_and_headings.append(f"### {txt}")
+            else:
+                paragraphs_and_headings.append(txt)
+
         table_blocks: List[str] = []
         tables: List[Dict[str, Any]] = []
         for table_index, table in enumerate(doc.tables):
@@ -49,7 +64,7 @@ class DOCXExtractor(BaseExtractor):
                 }
             )
 
-        text = "\n\n".join(paragraphs + table_blocks)
+        text = "\n\n".join(paragraphs_and_headings + table_blocks)
 
         images: List[Dict[str, Any]] = []
         image_index = 0
@@ -59,7 +74,9 @@ class DOCXExtractor(BaseExtractor):
                 continue
             try:
                 blob = rel.target_part.blob
-            except Exception:
+            except Exception as e:
+                from memotrix.utils.trace import mlog
+                mlog("docx", f"Warning: Failed to extract image blob from rel {reltype}: {e}")
                 continue
             if not blob:
                 continue

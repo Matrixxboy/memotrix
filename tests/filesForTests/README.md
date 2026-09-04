@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 TUG (TheUltimateRAG)
+# 🚀 TUG (Theho)
 
 ### A Modular, Production-Ready Foundation for Next-Generation AI Applications
 

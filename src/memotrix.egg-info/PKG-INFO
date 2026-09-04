@@ -1,18 +1,48 @@
 Metadata-Version: 2.4
 Name: memotrix
-Version: 0.1.0
-Summary: Composable hybrid memory / RAG framework for agents.
-Author: Memotrix
-License: MIT
-Project-URL: Homepage, https://github.com/memotrix/memotrix
-Keywords: rag,memory,agents,pgvector,hybrid-search
+Version: 0.2.0
+Summary: Composable hybrid memory and RAG framework for building intelligent AI agents.
+Author: Utsav Lankapati
+Maintainer: Utsav Lankapati
+License: MIT License
+        
+        Copyright (c) 2026 Memotrix contributors
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/Matrixxboy/memotrix
+Project-URL: Repository, https://github.com/Matrixxboy/memotrix
+Project-URL: Issues, https://github.com/Matrixxboy/memotrix/issues
+Keywords: ai,agents,memory,agent-memory,long-term-memory,rag,retrieval-augmented-generation,retrieval,semantic-search,hybrid-search,vector-search,keyword-search,pgvector,postgresql,hnsw,bm25,embeddings
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
 Classifier: Programming Language :: Python :: 3.12
 Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: python-dotenv>=1.0.0
 Provides-Extra: postgres
 Requires-Dist: psycopg[binary]>=3.2.0; extra == "postgres"
@@ -23,104 +53,173 @@ Requires-Dist: rank-bm25>=0.2.2; extra == "local"
 Requires-Dist: numpy>=1.26.0; extra == "local"
 Provides-Extra: embeddings
 Requires-Dist: sentence-transformers>=3.0.0; extra == "embeddings"
+Provides-Extra: pdf
+Requires-Dist: pymupdf>=1.24.0; extra == "pdf"
+Provides-Extra: docx
+Requires-Dist: python-docx>=1.1.0; extra == "docx"
+Provides-Extra: pptx
+Requires-Dist: python-pptx>=1.0.0; extra == "pptx"
+Provides-Extra: excel
+Requires-Dist: openpyxl>=3.1.0; extra == "excel"
+Requires-Dist: pandas>=2.2.0; extra == "excel"
+Provides-Extra: images
+Requires-Dist: Pillow>=10.0.0; extra == "images"
+Requires-Dist: pillow-heif; extra == "images"
+Provides-Extra: html
+Requires-Dist: beautifulsoup4>=4.12.0; extra == "html"
+Provides-Extra: knowledge
+Requires-Dist: rdflib>=7.0.0; extra == "knowledge"
+Provides-Extra: yaml
+Requires-Dist: PyYAML>=6.0; extra == "yaml"
+Provides-Extra: documents
+Requires-Dist: memotrix[docx,excel,html,pdf,pptx]; extra == "documents"
+Provides-Extra: data
+Requires-Dist: memotrix[excel,knowledge,yaml]; extra == "data"
+Provides-Extra: all-extractors
+Requires-Dist: memotrix[data,documents,images]; extra == "all-extractors"
 Provides-Extra: extractors
-Requires-Dist: pymupdf>=1.24.0; extra == "extractors"
-Requires-Dist: python-docx>=1.1.0; extra == "extractors"
-Requires-Dist: python-pptx>=1.0.0; extra == "extractors"
-Requires-Dist: openpyxl>=3.1.0; extra == "extractors"
-Requires-Dist: pandas>=2.2.0; extra == "extractors"
-Requires-Dist: Pillow>=10.0.0; extra == "extractors"
-Requires-Dist: pillow-heif; extra == "extractors"
-Requires-Dist: PyYAML>=6.0; extra == "extractors"
+Requires-Dist: memotrix[all-extractors]; extra == "extractors"
 Provides-Extra: openai
 Requires-Dist: openai>=1.40.0; extra == "openai"
 Provides-Extra: audio
 Requires-Dist: faster-whisper>=1.0.0; extra == "audio"
 Provides-Extra: dev
 Requires-Dist: pytest>=8.0.0; extra == "dev"
+Provides-Extra: memory
+Requires-Dist: hnswlib>=0.8.0; extra == "memory"
+Requires-Dist: rank-bm25>=0.2.2; extra == "memory"
+Requires-Dist: numpy>=1.26.0; extra == "memory"
+Requires-Dist: sentence-transformers>=3.0.0; extra == "memory"
 Provides-Extra: all
-Requires-Dist: memotrix[audio,embeddings,extractors,local,openai,postgres]; extra == "all"
+Requires-Dist: memotrix[all-extractors,audio,embeddings,local,openai,postgres]; extra == "all"
+Dynamic: license-file
 
 # Memotrix
 
-Composable hybrid memory / RAG for agents — pip-installable, like LangChain.
+**Composable hybrid memory and RAG for AI agents.**
+
+Memotrix lets an agent remember files and free-text facts the same way LangChain-style tools compose: pick embeddings, pick a store, then `add` / `search` / `delete`. It is a Python library — not an LLM, not a chat UI, and not a hosted service.
+
+It chunks documents, stores **dense vectors** (semantic) plus a **keyword index** (BM25 or Postgres full-text), and retrieves a small context window with hybrid search, optional rerank, and neighbor expansion.
+
+- [GitHub](https://github.com/Matrixxboy/memotrix)
+- [User guide](https://github.com/Matrixxboy/memotrix/blob/main/memory/docs/USER_GUIDE.md)
+
+---
+
+## Why use it
+
+| You need | Memotrix does |
+|---|---|
+| Agent long-term memory | `add_text` for facts, chat turns, procedures (`semantic` / `episodic` / `procedural`) |
+| RAG over files | `add("report.pdf")` then `search("what is the revenue?")` |
+| Hybrid retrieval | Dense (HNSW or pgvector) + sparse (BM25 or Postgres `tsvector`), fused with RRF |
+| Tight context | Default `top_k=3` and neighbor-window expansion, not five full files |
+| No silent secrets | You pass the embedding model and DSN. Nothing is defaulted. |
+
+---
 
 ## Install
 
-```bash
-pip install memotrix[postgres,embeddings,extractors]
-```
-
-Editable (this repo):
+Python 3.10+. A bare `pip install memotrix` only installs `python-dotenv`. Use an extra:
 
 ```bash
-pip install -e ./memory[postgres,local,embeddings,extractors,openai]
+pip install memotrix[memory]
 ```
+
+Postgres + file extractors:
+
+```bash
+pip install memotrix[postgres,memory,extractors]
+```
+
+| Extra | Enables |
+|---|---|
+| `memory` | in-process HNSW + BM25 + Sentence-Transformers (minimum to construct `Memory`) |
+| `local` | HNSW + BM25 |
+| `embeddings` | HuggingFace / Sentence-Transformers |
+| `postgres` | PostgreSQL + pgvector |
+| `extractors` | PDF, Office, HTML, CSV, images, RDF, … |
+| `openai` | OpenAI embeddings and vision |
+| `audio` | Whisper transcription |
+| `all` | everything above |
+
+---
 
 ## Quick start
 
-Nothing is assumed. You pass the embedding model and the database connection.
+```python
+from memotrix import Memory
+from memotrix.embeddings import HuggingFaceEmbeddings
+from memotrix.vectorstores import InMemoryStore
+
+embeddings = HuggingFaceEmbeddings(model="BAAI/bge-small-en-v1.5")
+memory = Memory(embeddings=embeddings, store=InMemoryStore(embeddings))
+
+memory.add_text("User prefers dark mode.", memory_type="semantic", source_id="prefs")
+hits = memory.search("what theme does the user want?", top_k=3)
+memory.delete("prefs")
+memory.close()
+```
+
+Files:
+
+```python
+memory.add("report.pdf")
+hits = memory.search("what is the revenue?", memory_type="semantic")
+print(memory.list_sources())
+```
+
+Postgres:
 
 ```python
 import os
-from memotrix import Memory
-from memotrix.embeddings import HuggingFaceEmbeddings
-from memotrix.vectorstores import PostgresStore, InMemoryStore
+from memotrix.vectorstores import PostgresStore
 
 embeddings = HuggingFaceEmbeddings(model=os.environ["EMBEDDING_MODEL"])
-# dimension is inferred from the model — never hardcoded
-
 memory = Memory(
     embeddings=embeddings,
-    store=PostgresStore(
-        connection=os.environ["DATABASE_URL"],
-        embeddings=embeddings,
-    ),
-)
-
-memory.add("report.pdf")
-hits = memory.search("what is the revenue?")
-```
-
-In-process (no Postgres):
-
-```python
-memory = Memory(
-    embeddings=embeddings,
-    store=InMemoryStore(embeddings),
+    store=PostgresStore(connection=os.environ["DATABASE_URL"], embeddings=embeddings),
 )
 ```
 
-From environment (fails if required vars are missing):
+Or from the environment (`EMBEDDING_MODEL` required; `DATABASE_URL` when `MEMOTRIX_BACKEND=postgres`):
 
 ```python
 from memotrix import Memory
 memory = Memory.from_env()
 ```
 
-Required env for `from_env()`:
+---
 
-| Variable | When |
-|---|---|
-| `EMBEDDING_MODEL` | always |
-| `DATABASE_URL` (or discrete `DATABASE_*` / `POSTGRES_*` parts) | `MEMOTRIX_BACKEND=postgres` |
-| `MEMOTRIX_BACKEND` | `memory` (default) or `postgres` |
-| `RERANKER_MODEL` | optional |
-
-There is **no** default password, host, database name, embedding model, or embedding dimension.
-
-## Compose like LangChain
+## Agent memory
 
 ```python
-from memotrix import Memory, MemoryConfig
-from memotrix.embeddings import HuggingFaceEmbeddings
-
-config = MemoryConfig(backend="postgres", table_name="my_chunks")
-memory = Memory(
-    embeddings=HuggingFaceEmbeddings(model="BAAI/bge-small-en-v1.5"),
-    connection="postgresql://user:pass@localhost:5432/app",
-    config=config,
-)
+memory.add_text("Shipped hybrid search.", memory_type="episodic", session_id="2026-09-03")
+memory.add_text("Always cite source_path.", memory_type="procedural")
+memory.search("how should answers be cited?", memory_type="procedural")
 ```
 
-Custom dense/sparse indexes can be passed as `store=` if they expose `.dense` and `.sparse`.
+`session_id` and `memory_type` are exact-match payload filters.
+
+---
+
+## What it can ingest
+
+PDF, DOCX, PPTX, TXT, Markdown, HTML, EPUB, CSV, Excel (`.xlsx`), JSON (FHIR / GeoJSON / chat sniff), YAML, XML, SQL, images, video, audio (`[audio]`), source code, SCORM, knowledge graphs, GeoJSON, email (`.eml` / `.mbox`), chat exports, and `.log` files.
+
+Generic `.zip` and BIFF `.xls` are not supported. Convert spreadsheets to `.xlsx`.
+
+Plug in your own extractor:
+
+```python
+memory = Memory(embeddings=embeddings, extract_file=my_extractor)
+```
+
+---
+
+## Links
+
+- Source: [github.com/Matrixxboy/memotrix](https://github.com/Matrixxboy/memotrix)
+- Full API: [User guide](https://github.com/Matrixxboy/memotrix/blob/main/memory/docs/USER_GUIDE.md)
+- License: MIT
