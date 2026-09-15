@@ -1,0 +1,3 @@
+Memotrix is a composable hybrid memory library for AI agents.
+It stores dense vectors and a keyword index, then retrieves a small context window.
+Q3 revenue was 42 million dollars. The north region led growth.

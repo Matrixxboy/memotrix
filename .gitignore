@@ -6,7 +6,7 @@
 # C extensions
 *.so
 
-# Distribution / packaging
+site/
 .Python
 build/
 develop-eggs/

@@ -1,5 +1,9 @@
 # API Reference: Vector Stores
 
+Canonical website page: [../api/vectorstores.md](../api/vectorstores.md).
+
+Vector Stores manage the storage and retrieval of Dense (vector) embeddings, Sparse (keyword) weights, and raw metadata payloads.
+
 Vector Stores manage the storage and retrieval of Dense (vector) embeddings, Sparse (keyword) weights, and raw metadata payloads.
 
 Memotrix bundles these capabilities into a `VectorStoreBundle` interface, which exposes `.dense` and `.sparse` properties.

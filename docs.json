@@ -1,0 +1,72 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Memotrix",
+  "description": "Composable hybrid memory and RAG for AI agents",
+  "colors": {
+    "primary": "#0F766E",
+    "light": "#2DD4BF",
+    "dark": "#115E59"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get started",
+        "pages": [
+          "docs/index",
+          "docs/installation",
+          "docs/quickstart",
+          "docs/configuration"
+        ]
+      },
+      {
+        "group": "Concepts",
+        "pages": [
+          "docs/concepts/overview",
+          "docs/concepts/architecture",
+          "docs/concepts/hybrid-search",
+          "docs/concepts/memory-types",
+          "docs/concepts/chunking-and-expansion"
+        ]
+      },
+      {
+        "group": "Use cases",
+        "pages": [
+          "docs/use-cases/index",
+          "docs/use-cases/agent-long-term-memory",
+          "docs/use-cases/document-question-answering",
+          "docs/use-cases/file-ingestion",
+          "docs/use-cases/structured-data",
+          "docs/use-cases/codebase-memory",
+          "docs/use-cases/images-and-media",
+          "docs/use-cases/email-chat-logs",
+          "docs/use-cases/knowledge-graphs-and-fhir",
+          "docs/use-cases/postgres-persistence",
+          "docs/use-cases/rag-agent",
+          "docs/use-cases/custom-extractors"
+        ]
+      },
+      {
+        "group": "API reference",
+        "pages": [
+          "docs/api/memory",
+          "docs/api/embeddings",
+          "docs/api/vectorstores",
+          "docs/api/config",
+          "docs/api/extractors",
+          "docs/api/exceptions"
+        ]
+      },
+      {
+        "group": "Guides",
+        "pages": [
+          "docs/guides/extras",
+          "docs/guides/deployment",
+          "docs/guides/demo",
+          "docs/guides/security",
+          "docs/guides/troubleshooting"
+        ]
+      }
+    ]
+  }
+}

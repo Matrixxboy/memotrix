@@ -54,12 +54,12 @@ Before each release, increment **both**:
 
 ```toml
 # pyproject.toml
-version = "0.1.1"
+version = "0.2.1"
 ```
 
 ```python
 # src/memotrix/__init__.py
-__version__ = "0.1.1"
+__version__ = "0.2.1"
 ```
 
 Use [semver](https://semver.org): patch for bugfixes, minor for compatible API additions, major for breaking changes. You cannot reuse a version that was already uploaded to PyPI.

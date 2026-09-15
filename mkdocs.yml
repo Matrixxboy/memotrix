@@ -1,0 +1,65 @@
+site_name: Memotrix
+site_description: Composable hybrid memory and RAG for AI agents
+site_url: https://matrixxboy.github.io/memotrix/
+repo_url: https://github.com/Matrixxboy/memotrix
+repo_name: Matrixxboy/memotrix
+docs_dir: docs
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Quickstart: quickstart.md
+  - Configuration: configuration.md
+  - Concepts:
+      - Overview: concepts/overview.md
+      - Architecture: concepts/architecture.md
+      - Hybrid search: concepts/hybrid-search.md
+      - Memory types: concepts/memory-types.md
+      - Chunking: concepts/chunking-and-expansion.md
+  - Use cases:
+      - Index: use-cases/index.md
+      - Agent memory: use-cases/agent-long-term-memory.md
+      - Document Q&A: use-cases/document-question-answering.md
+      - File ingestion: use-cases/file-ingestion.md
+      - Structured data: use-cases/structured-data.md
+      - Codebase: use-cases/codebase-memory.md
+      - Images and media: use-cases/images-and-media.md
+      - Email, chat, logs: use-cases/email-chat-logs.md
+      - Knowledge graphs and FHIR: use-cases/knowledge-graphs-and-fhir.md
+      - PostgreSQL: use-cases/postgres-persistence.md
+      - RAG agent: use-cases/rag-agent.md
+      - Custom extractors: use-cases/custom-extractors.md
+  - API:
+      - Memory: api/memory.md
+      - Embeddings: api/embeddings.md
+      - Vector stores: api/vectorstores.md
+      - Config: api/config.md
+      - Extractors: api/extractors.md
+      - Exceptions: api/exceptions.md
+  - Tutorials:
+      - Quickstart: tutorials/01-quickstart.md
+      - RAG agent: tutorials/02-build-a-rag-agent.md
+  - How-to:
+      - Custom extractors: how-to/custom-extractors.md
+      - Postgres: how-to/postgres-migration.md
+      - Hybrid search: how-to/hybrid-search-tuning.md
+  - Guides:
+      - Extras: guides/extras.md
+      - Deployment: guides/deployment.md
+      - Live demos: guides/demo.md
+      - Security: guides/security.md
+      - Troubleshooting: guides/troubleshooting.md
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - toc:
+      permalink: true

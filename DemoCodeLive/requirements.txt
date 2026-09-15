@@ -1,0 +1,9 @@
+memotrix==0.2.0
+pillow>=10.0.0
+# In-process Memory also needs:
+#   pip install "memotrix[local]"
+# or
+#   pip install "memotrix[memory]"
+# hnswlib is compiled from source. On Windows that requires Microsoft C++ Build Tools.
+# HuggingFace models additionally need [memory] / [embeddings] (downloads torch).
+

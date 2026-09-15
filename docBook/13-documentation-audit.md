@@ -1,27 +1,30 @@
 ---
 title: "Documentation Audit"
 category: "Audit"
-status: "Generated"
-last_updated: "2026-09-04"
+status: "Updated"
+last_updated: "2026-09-15"
 ---
 
 # Documentation Audit
 
-## Repository Coverage
-- [x] Source code inspected
-- [x] Major modules documented
-- [x] Features documented
-- [x] Architecture documented
+Public website docs: [`docs/`](../docs/index.md) (merged with this DocBook). Live demos: [`DemoCodeLive/`](../DemoCodeLive/README.md).
+
+## Repository coverage
+
+- [x] `Memory` facade, stores, embeddings, extractors, hybrid search documented
+- [x] Every wired file-type group has a use-case page
+- [x] No REST API documented (none in this package)
+- [x] Postgres schema described from `PostgresStore` behavior
+- [x] Security notes are documentation-level, not a pentest
 
 ## Accuracy
-- [x] No fabricated numbers
-- [x] No unsupported claims
-- [x] Diagrams match implementation
+
+- [x] No fabricated benchmark numbers
+- [x] PyPI 0.2.0 extras and env vars match `pyproject.toml`
+- [x] `__version__` mismatch (0.1.0 in wheel vs 0.2.0 dist) recorded
+- [x] Demo install on Windows without MSVC recorded as failed `hnswlib` build
 
 ## Navigation
-- [x] `00-index.md` serves as the master navigation document
-- [x] Internal links generated
-- [x] Topic-wise organization implemented
 
-## Note on Executable Content
-Certain sections (like deep benchmarking numbers and live API latency measurements) require a dedicated benchmarking environment to produce non-fabricated, real metrics. These have been structurally accounted for, and the framework is in place to run them. The documentation represents the factual, structurally verified state of the repository as analyzed.
+- Website hub: `docs/index.md` + `docs.json`
+- DocBook hub: `00-index.md` points at `docs/`

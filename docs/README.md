@@ -1,32 +1,32 @@
-# Memotrix Documentation Hub
+# Memotrix documentation (website)
 
-Welcome to the Memotrix developer documentation. Memotrix is a composable hybrid memory and RAG library for AI agents.
+This folder is the **public website documentation**: tutorials, use cases, API, and guides.
 
-## Documentation Structure
+Internal architecture notes remain in [`../docBook/`](../docBook/00-index.md). Publishing to PyPI: [PUBLISHING.md](./PUBLISHING.md).
 
-This documentation is organized into four main sections, following the [Diátaxis framework](https://diataxis.fr/):
+## Navigation
 
-### 1. [Tutorials](tutorials/)
-Step-by-step guides for learning how to use Memotrix from scratch. Start here if you are new to the framework.
-- [Quickstart: 5-minute setup](tutorials/01-quickstart.md)
-- [Build a RAG Agent](tutorials/02-build-a-rag-agent.md)
+| Topic | Page |
+|---|---|
+| Home | [index.md](./index.md) |
+| Install | [installation.md](./installation.md) |
+| Quickstart | [quickstart.md](./quickstart.md) |
+| Config | [configuration.md](./configuration.md) |
+| Concepts | [concepts/overview.md](./concepts/overview.md) |
+| All use cases | [use-cases/index.md](./use-cases/index.md) |
+| API: Memory | [api/memory.md](./api/memory.md) |
+| Troubleshooting | [guides/troubleshooting.md](./guides/troubleshooting.md) |
+| Live demos | [DemoCodeLive](https://github.com/Matrixxboy/memotrix/tree/main/DemoCodeLive) |
 
-### 2. [How-To Guides](how-to/)
-Goal-oriented recipes for solving specific problems with Memotrix.
-- [Adding Custom File Extractors](how-to/custom-extractors.md)
-- [Migrating to PostgreSQL (pgvector)](how-to/postgres-migration.md)
-- [Tuning Hybrid Search](how-to/hybrid-search-tuning.md)
+Site nav JSON (Mintlify): [`../docs.json`](../docs.json).
 
-### 3. [Concepts](concepts/)
-Theoretical explanations of how Memotrix works under the hood. Read these to understand the architecture deeply.
-- [Memory Types (Semantic, Episodic, Procedural)](concepts/memory-types.md)
-- [Chunking and Neighbor Expansion](concepts/chunking-and-expansion.md)
+### Tutorials (kept)
 
-### 4. [API Reference](api-reference/)
-Detailed technical specifications of the Memotrix classes and methods.
-- [The `Memory` Facade](api-reference/memory-facade.md)
-- [Vector Stores (`InMemoryStore`, `PostgresStore`)](api-reference/vectorstores.md)
+- [01 Quickstart](./tutorials/01-quickstart.md)
+- [02 RAG agent](./tutorials/02-build-a-rag-agent.md)
 
----
-> **Note on Architecture Documentation:**
-> For internal project history, system capabilities, and high-level UML architecture diagrams, please refer to the [`docBook/`](../docBook/) directory at the root of the repository.
+### How-to (kept)
+
+- [Custom extractors](./how-to/custom-extractors.md)
+- [Postgres migration](./how-to/postgres-migration.md)
+- [Hybrid search tuning](./how-to/hybrid-search-tuning.md)

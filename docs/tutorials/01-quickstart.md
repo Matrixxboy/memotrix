@@ -11,6 +11,9 @@ Memotrix requires Python 3.10+.
 Memotrix uses granular optional dependencies, so you only install what you need. For this quickstart, we will use the in-memory backend with local HuggingFace embeddings, and we will extract a standard PDF.
 
 ```bash
+pip install memotrix
+pip install "memotrix[memory]"
+# PDF extra only if you ingest PDFs:
 pip install "memotrix[memory,pdf]"
 ```
 

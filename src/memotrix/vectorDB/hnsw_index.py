@@ -2,10 +2,33 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-import hnswlib
-import numpy as np
-
 from .base import DenseIndex, PayloadFilters, payload_matches_filters, payload_matches_source
+
+
+def _hnswlib():
+    try:
+        import hnswlib
+    except ImportError as exc:
+        from memotrix.utils.exceptions import MissingDependencyError
+
+        raise MissingDependencyError(
+            "hnswlib is required for InMemoryStore. "
+            "Install with: pip install 'memotrix[local]'. "
+            "On Windows, hnswlib builds from source and needs Microsoft C++ Build Tools."
+        ) from exc
+    return hnswlib
+
+
+def _numpy():
+    try:
+        import numpy as np
+    except ImportError as exc:
+        from memotrix.utils.exceptions import MissingDependencyError
+
+        raise MissingDependencyError(
+            "numpy is required for InMemoryStore. Install with: pip install 'memotrix[local]'"
+        ) from exc
+    return np
 
 
 class HNSWDenseIndex(DenseIndex):
@@ -20,7 +43,7 @@ class HNSWDenseIndex(DenseIndex):
         self.space = space
         self.dim = dim
         self.max_elements = max_elements
-        self.index = hnswlib.Index(space=self.space, dim=self.dim)
+        self.index = _hnswlib().Index(space=self.space, dim=self.dim)
         self.index.init_index(
             max_elements=self.max_elements,
             ef_construction=200,
@@ -39,6 +62,7 @@ class HNSWDenseIndex(DenseIndex):
         if not ids:
             return
 
+        np = _numpy()
         data_labels = []
         data_vectors = np.array(vectors, dtype=np.float32)
 
@@ -62,7 +86,7 @@ class HNSWDenseIndex(DenseIndex):
 
     def _hits_from_knn(
         self,
-        query_data: np.ndarray,
+        query_data: Any,
         fetch: int,
         k: int,
         filters: PayloadFilters,
@@ -101,7 +125,7 @@ class HNSWDenseIndex(DenseIndex):
         except Exception:
             current_count = live
         max_fetch = max(min(current_count, live, self.max_elements), 1)
-        query_data = np.array([query_vector], dtype=np.float32)
+        query_data = _numpy().array([query_vector], dtype="float32")
         if not filters:
             return self._hits_from_knn(query_data, min(max(k, 1), max_fetch), k, filters)
 
@@ -195,7 +219,7 @@ class HNSWDenseIndex(DenseIndex):
         self.payloads = state["payloads"]
         self._deleted = set(state.get("deleted", []))
 
-        self.index = hnswlib.Index(space=self.space, dim=self.dim)
+        self.index = _hnswlib().Index(space=self.space, dim=self.dim)
         self.index.load_index(
             str(base_path / "hnsw_index.bin"), max_elements=self.max_elements
         )

@@ -3,9 +3,19 @@ import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from rank_bm25 import BM25Okapi
-
 from .base import PayloadFilters, SparseIndex, payload_matches_filters, payload_matches_source
+
+
+def _bm25_okapi():
+    try:
+        from rank_bm25 import BM25Okapi
+    except ImportError as exc:
+        from memotrix.utils.exceptions import MissingDependencyError
+
+        raise MissingDependencyError(
+            "rank-bm25 is required for InMemoryStore. Install with: pip install 'memotrix[local]'"
+        ) from exc
+    return BM25Okapi
 
 
 class BM25SparseIndex(SparseIndex):
@@ -19,7 +29,7 @@ class BM25SparseIndex(SparseIndex):
         self.texts: List[str] = []
         self.payloads: List[Dict[str, Any]] = []
         self.tokenized_corpus: List[List[str]] = []
-        self.bm25: BM25Okapi | None = None
+        self.bm25 = None
 
     def _tokenize(self, text: str) -> List[str]:
         text = text.lower()
@@ -28,7 +38,7 @@ class BM25SparseIndex(SparseIndex):
 
     def _rebuild(self) -> None:
         if self.tokenized_corpus:
-            self.bm25 = BM25Okapi(self.tokenized_corpus)
+            self.bm25 = _bm25_okapi()(self.tokenized_corpus)
         else:
             self.bm25 = None
 

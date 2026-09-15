@@ -7,7 +7,6 @@ from typing import Any, Dict, List, Optional
 from pathlib import Path
 from typing import Dict, Any
 
-from PIL import Image, ExifTags, ImageStat
 import hashlib
 import mimetypes
 import time
@@ -346,6 +345,15 @@ def extract_image_metadata(image_path: str) -> Dict[str, Any]:
     # ---------------------------------------------------
     # Image Properties
     # ---------------------------------------------------
+
+    try:
+        from PIL import Image, ExifTags, ImageStat
+    except ImportError as exc:
+        from memotrix.utils.exceptions import MissingDependencyError
+
+        raise MissingDependencyError(
+            "Pillow is required for image metadata. Install with: pip install memotrix[images]"
+        ) from exc
 
     with Image.open(path) as img:
 

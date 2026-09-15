@@ -1,5 +1,9 @@
 # API Reference: The `Memory` Facade
 
+> Canonical website page: [Memory API](../api/memory.md). This file is kept for older links.
+
+The `Memory` class is the primary entry point for the Memotrix SDK. It acts as a facade, orchestrating the extraction, ingestion, vector stores, and retrieval pipelines.
+
 The `Memory` class is the primary entry point for the Memotrix SDK. It acts as a facade, orchestrating the extraction, ingestion, vector stores, and retrieval pipelines.
 
 ```python

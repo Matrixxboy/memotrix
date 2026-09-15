@@ -2,7 +2,10 @@
 
 Composable hybrid memory / RAG for agents — pip-installable, like LangChain.
 
-**Guides:** [User guide](docs/USER_GUIDE.md) (every public API) · [Publish to PyPI](docs/PUBLISHING.md)
+**Website docs (merged use cases + API):** [docs/index.md](docs/index.md)  
+**Live demos (PyPI install):** [DemoCodeLive/](DemoCodeLive/README.md)  
+**Architecture notebook:** [docBook/00-index.md](docBook/00-index.md)  
+**Publish to PyPI:** [docs/PUBLISHING.md](docs/PUBLISHING.md)
 
 ## Install
 
@@ -121,7 +124,7 @@ PDF, DOCX, PPTX, TXT, Markdown, HTML, EPUB, CSV, Excel (`.xlsx`), JSON (includin
 
 Domain apps (marine, education, finance, medical) ingest those files with `memory.add(path)` and store free-form notes with `memory.add_text(...)`.
 
-See `examples/01_in_memory.py`, `examples/02_files_postgres.py`, `examples/03_agent_loop.py`.
+See `DemoCodeLive/` (PyPI `pip install "memotrix[memory]"`), plus `examples/01_in_memory.py`, `examples/02_files_postgres.py`, `examples/03_agent_loop.py`.
 
-Full usage (constructors, search hits, every file type, env vars, troubleshooting): [docs/USER_GUIDE.md](docs/USER_GUIDE.md).
+Full usage: [docs/index.md](docs/index.md) · every use case: [docs/use-cases/index.md](docs/use-cases/index.md).
 Releasing the package: [docs/PUBLISHING.md](docs/PUBLISHING.md).

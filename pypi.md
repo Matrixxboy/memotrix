@@ -6,8 +6,9 @@ Memotrix lets an agent remember files and free-text facts the same way LangChain
 
 It chunks documents, stores **dense vectors** (semantic) plus a **keyword index** (BM25 or Postgres full-text), and retrieves a small context window with hybrid search, optional rerank, and neighbor expansion.
 
+- [Website](https://matrixxboy.github.io/memotrix/)
 - [GitHub](https://github.com/Matrixxboy/memotrix)
-- [User guide](https://github.com/Matrixxboy/memotrix/blob/main/memory/docs/USER_GUIDE.md)
+- [Documentation](https://github.com/Matrixxboy/memotrix/blob/main/docs/index.md)
 
 ---
 
@@ -25,7 +26,7 @@ It chunks documents, stores **dense vectors** (semantic) plus a **keyword index*
 
 ## Install
 
-Python 3.10+. A bare `pip install memotrix` only installs `python-dotenv`. Use an extra:
+Python **3.10+**. A bare `pip install memotrix` only installs `python-dotenv`. From **0.2.1**, importing `Memory` no longer requires Pillow. `InMemoryStore` still needs `[local]` or `[memory]` (`hnswlib` + `rank-bm25`). On Windows, `hnswlib` compiles from source (Microsoft C++ Build Tools).
 
 ```bash
 pip install memotrix[memory]
@@ -125,5 +126,5 @@ memory = Memory(embeddings=embeddings, extract_file=my_extractor)
 ## Links
 
 - Source: [github.com/Matrixxboy/memotrix](https://github.com/Matrixxboy/memotrix)
-- Full API: [User guide](https://github.com/Matrixxboy/memotrix/blob/main/memory/docs/USER_GUIDE.md)
+- Full API: [docs](https://github.com/Matrixxboy/memotrix/blob/main/docs/index.md)
 - License: MIT
