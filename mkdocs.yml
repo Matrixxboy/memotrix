@@ -54,6 +54,7 @@ nav:
       - Live demos: guides/demo.md
       - Security: guides/security.md
       - Troubleshooting: guides/troubleshooting.md
+      - GitHub Pages: guides/github-pages.md
 markdown_extensions:
   - admonition
   - pymdownx.superfences:

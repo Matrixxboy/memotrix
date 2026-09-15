@@ -64,7 +64,8 @@
           "docs/guides/deployment",
           "docs/guides/demo",
           "docs/guides/security",
-          "docs/guides/troubleshooting"
+          "docs/guides/troubleshooting",
+          "docs/guides/github-pages"
         ]
       }
     ]

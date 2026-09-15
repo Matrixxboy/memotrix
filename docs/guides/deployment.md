@@ -31,6 +31,10 @@ Or fully in-process for a single worker (no Postgres): HNSW lives in RAM; do not
 
 Install extras needed by tests; `pytest` extra is `dev`. This package’s tests live in the GitHub repo, not on PyPI.
 
+## Documentation website
+
+MkDocs is published by GitHub Actions to the `gh-pages` branch. See [GitHub Pages](./github-pages.md).
+
 ## Rollback
 
 Pin `memotrix==0.2.0` in your app. Standard pip/poetry pin; the library has no migration runner beyond `CREATE TABLE IF NOT EXISTS`.
